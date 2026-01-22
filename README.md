@@ -64,7 +64,7 @@ graph TB
     
     style App fill:#0051A5,color:#fff
     style Theme fill:#314F40 
-    style Backend fill:#f9f,stroke:#333
+    style Backend fill:#2596be,stroke:#333
 ```
 
 ### Application Flow
@@ -125,9 +125,9 @@ flowchart LR
     State --> UI
     UI --> User
     
-    style Validation fill:#bfb
-    style API fill:#bbf
-    style State fill:#fbf
+    style Validation fill:#2596be
+    style API fill:#0051A5
+    style State fill:#314F40
 ```
 
 ## 📋 Requirements
