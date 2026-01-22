@@ -2,21 +2,20 @@
 
 A modern, responsive React-based inventory management frontend application built with Material-UI (MUI) and Vite. This application provides a comprehensive interface for managing inventory items with real-time event history tracking.
 
-## 🏗️ Architecture
+## Architecture
 
-This frontend is designed to work seamlessly with an **Event Sourcing** backend API. The application provides full CRUD operations for inventory management with a focus on user experience, real-time feedback, and comprehensive event history visualization.
+This frontend is designed to work seamlessly with an **Event Sourcing** backend API. The application provides full CRUD operations for inventory management with a focus on user experience, real-time feedback, and comprehensive event history.
 
 ### Key Features
-- ✨ Modern, responsive Material-UI design
-- 🎨 Custom RBC-branded theme
-- 📊 Real-time inventory tracking
-- 📜 Event history visualization
-- 🔍 Advanced search and filtering
-- 🖨️ Print-ready inventory reports
-- ✅ Client-side validation
-- 🎯 Intuitive user interface
+- Modern, responsive Material-UI design
+- RBC-branded theme
+- Event history
+- Search and filtering
+- Print-ready inventory reports
+- Client-side validation
+- Intuitive user interface
 
-## 📐 Architecture Diagrams
+## Architecture Diagrams
 
 ### Component Architecture
 
@@ -130,13 +129,13 @@ flowchart LR
     style State fill:#314F40
 ```
 
-## 📋 Requirements
+## Requirements
 
 - Node.js 18+ 
 - npm or yarn
 - Modern web browser with ES6+ support
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone the repository
 ```bash
@@ -175,7 +174,7 @@ npm run build
 
 Production files will be generated in the `dist/` directory.
 
-## 🎨 Features
+## Features
 
 ### Inventory Management
 - **List View**: Display all inventory items with search and filtering
@@ -199,7 +198,7 @@ Production files will be generated in the `dist/` directory.
 - **Error Handling**: User-friendly error messages
 - **Validation**: Real-time form validation with helpful messages
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -231,7 +230,7 @@ public/
 └── docker-compose.vite.yaml  # Vite-specific DDEV setup
 ```
 
-## 🎯 Component Overview
+## Component Overview
 
 ### Pages
 
@@ -288,7 +287,7 @@ public/
 - Error handling
 - Type documentation with JSDoc
 
-## 🎨 Theming
+## Theming
 
 The application uses a custom Material-UI theme based on RBC branding:
 
@@ -355,7 +354,7 @@ await deleteItem(id);
 const events = await getItemEvents(id);
 ```
 
-## 🖨️ Print Functionality
+## Print Functionality
 
 The application includes a sophisticated print feature that generates professional inventory reports:
 
@@ -368,7 +367,7 @@ The application includes a sophisticated print feature that generates profession
 
 Access via the "Print" button on the Inventory page.
 
-## 🧪 Development
+## Development
 
 ### Available Scripts
 
@@ -410,7 +409,7 @@ The DDEV configuration includes:
 - Hot module replacement (HMR)
 - File watching with polling
 
-## 🎯 Form Validation
+## Form Validation
 
 ### Item Name
 - ✅ Required field
@@ -429,7 +428,7 @@ Validation occurs:
 - On form submission
 - Real-time after first touch
 
-## 🔒 Error Handling
+## Error Handling
 
 The application handles various error scenarios:
 
@@ -445,14 +444,14 @@ The application handles various error scenarios:
 - **Loading States**: Circular progress indicators
 - **Confirmation Dialogs**: For destructive actions
 
-## 🌐 Browser Support
+## Browser Support
 
 - Chrome/Edge 90+
 - Firefox 88+
 - Safari 14+
 - Opera 76+
 
-## 📦 Dependencies
+## Dependencies
 
 ### Core Dependencies
 - **react**: ^19.2.0 - UI library
@@ -468,7 +467,7 @@ The application handles various error scenarios:
 - **@vitejs/plugin-react**: ^5.1.1 - React plugin
 - **eslint**: ^9.39.1 - Code linting
 
-## 🚀 Deployment
+## Deployment
 
 ### Production Build
 
@@ -501,24 +500,3 @@ For production, configure:
 ```bash
 VITE_API_URL=https://your-production-api.com/api
 ```
-
-## 📝 Best Practices
-
-### Code Style
-- Functional React components
-- Hooks for state management
-- PropTypes for type checking (implicit via JSDoc)
-- ESLint for code quality
-
-### Performance
-- Lazy loading for routes (future enhancement)
-- Memoization for expensive computations
-- Optimized re-renders with useMemo/useCallback
-- Image optimization
-
-### Accessibility
-- Semantic HTML elements
-- ARIA labels where needed
-- Keyboard navigation support
-- Focus management
-- Screen reader friendly
