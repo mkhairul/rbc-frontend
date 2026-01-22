@@ -63,7 +63,7 @@ graph TB
     ItemsAPI --> Backend
     
     style App fill:#0051A5,color:#fff
-    style Theme fill:#FECC00
+    style Theme fill:#314F40 
     style Backend fill:#f9f,stroke:#333
 ```
 
