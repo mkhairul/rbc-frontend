@@ -1,0 +1,6 @@
+services:
+  web:
+    expose:
+      - "5173"
+    environment:
+      - VITE_PORT=5173
