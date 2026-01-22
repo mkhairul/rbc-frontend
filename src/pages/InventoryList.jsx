@@ -15,6 +15,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import PrintIcon from '@mui/icons-material/Print';
 import { Link } from 'react-router-dom';
 import ItemTable from '../components/ItemTable';
 import { getItems, deleteItem } from '../api/itemsApi';
@@ -83,6 +84,183 @@ function InventoryList() {
     setSearchQuery('');
   };
 
+  const handlePrint = () => {
+    const itemsToPrint = filteredItems.length > 0 ? filteredItems : items;
+    const printWindow = window.open('', '_blank');
+    const currentDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>RBC Inventory Report</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              padding: 40px;
+              color: #1A1A1A;
+            }
+            .header {
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start;
+              margin-bottom: 30px;
+              padding-bottom: 20px;
+              border-bottom: 3px solid #0051A5;
+            }
+            .logo {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+            .logo-icon {
+              width: 40px;
+              height: 40px;
+              background: #0051A5;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #FECC00;
+              font-weight: bold;
+              font-size: 18px;
+            }
+            .company-name {
+              font-size: 24px;
+              font-weight: 700;
+              color: #0051A5;
+            }
+            .report-title {
+              font-size: 14px;
+              color: #5C6670;
+            }
+            .date {
+              text-align: right;
+              font-size: 12px;
+              color: #5C6670;
+            }
+            h1 {
+              font-size: 20px;
+              margin-bottom: 5px;
+            }
+            .summary {
+              margin-bottom: 20px;
+              font-size: 14px;
+              color: #5C6670;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 10px;
+            }
+            th, td {
+              padding: 12px 8px;
+              text-align: left;
+              border-bottom: 1px solid #E0E4E8;
+            }
+            th {
+              background: #F5F7FA;
+              font-weight: 600;
+              color: #1A1A1A;
+              font-size: 12px;
+              text-transform: uppercase;
+            }
+            td { font-size: 14px; }
+            tr:hover { background: #FAFBFC; }
+            .quantity { text-align: center; }
+            .quantity-badge {
+              display: inline-block;
+              padding: 4px 12px;
+              border-radius: 12px;
+              font-weight: 500;
+              font-size: 12px;
+            }
+            .qty-ok { background: #E8F5E9; color: #2E7D32; }
+            .qty-low { background: #FFF3E0; color: #E65100; }
+            .qty-out { background: #FFEBEE; color: #C62828; }
+            .footer {
+              margin-top: 40px;
+              padding-top: 20px;
+              border-top: 1px solid #E0E4E8;
+              font-size: 11px;
+              color: #5C6670;
+              text-align: center;
+            }
+            @media print {
+              body { padding: 20px; }
+              .no-print { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div class="logo">
+              <div class="logo-icon">RBC</div>
+              <div>
+                <div class="company-name">RBC Inventory</div>
+                <div class="report-title">Inventory Report</div>
+              </div>
+            </div>
+            <div class="date">
+              <div>Generated on</div>
+              <div><strong>${currentDate}</strong></div>
+            </div>
+          </div>
+
+          <div class="summary">
+            Total items: <strong>${itemsToPrint.length}</strong>
+            ${searchQuery ? ` (filtered by "${searchQuery}")` : ''}
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Item Name</th>
+                <th class="quantity">Quantity</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsToPrint.map(item => {
+                const qtyClass = item.quantity === 0 ? 'qty-out' : item.quantity < 10 ? 'qty-low' : 'qty-ok';
+                const createdDate = item.created_at ? new Date(item.created_at).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                }) : '-';
+                return `
+                  <tr>
+                    <td>#${item.id}</td>
+                    <td>${item.name}</td>
+                    <td class="quantity"><span class="quantity-badge ${qtyClass}">${item.quantity}</span></td>
+                    <td>${createdDate}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+
+          <div class="footer">
+            Royal Bank of Canada - Inventory Management System
+          </div>
+
+          <script>
+            window.onload = function() { window.print(); };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
@@ -121,6 +299,14 @@ function InventoryList() {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button
+            variant="outlined"
+            startIcon={<PrintIcon />}
+            onClick={handlePrint}
+            disabled={items.length === 0}
+          >
+            Print
+          </Button>
           <Button
             variant="outlined"
             startIcon={<RefreshIcon />}
